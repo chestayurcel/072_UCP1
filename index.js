@@ -27,3 +27,13 @@ app.get('/buku', async (req, res) => {
         res.send(err);
     }
 });
+
+app.post('/buku', async (req, res) => {
+    const data = req.body;
+    try {
+        const buku = await db.Buku.create(data);
+        res.send(buku);
+    } catch (err) {
+        res.send(err);
+    }
+});
