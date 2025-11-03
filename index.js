@@ -37,3 +37,20 @@ app.post('/buku', async (req, res) => {
         res.send(err);
     }
 });
+
+app.put('/buku/:id', async (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+
+    try {
+        const buku = await db.Buku.findByPk(id);
+        if (!buku) {
+            return res.status(404).send({ message: "Buku tidak ditemukan!" });
+        }
+
+        await buku.update(data);
+        res.send({ message: "Buku berhasil diupdate!", buku });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
