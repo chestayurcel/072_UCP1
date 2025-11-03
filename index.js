@@ -54,3 +54,18 @@ app.put('/buku/:id', async (req, res) => {
         res.status(500).send(err);
     }
 });
+
+app.delete('/buku/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const buku = await db.Buku.findByPk(id);
+        if (!buku) {
+            return res.status(404).send({ message: "Buku tidak ditemukan!" });
+        }
+
+        await buku.destroy();
+        res.send({ message: "Buku berhasil dihapus!" });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
